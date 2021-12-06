@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style/CSS/base.css" rel="stylesheet">
+    <title>双色球</title>
+    <style>
+        #addToList {
+    background: url("img/ssq_button_ver3.0.jpg") no-repeat 0 -236px;
+}
+#addToList::after {
+    background: url("img/ssq_button_ver3.0.jpg") no-repeat 18px -89px #fef9f3;
+}
+
+.forward,.toward{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: aqua;
+    background: url("img/ssq_button_ver3.0.jpg") no-repeat 0 0 #fef9f3;
+}
+    </style>
+</head>
+
+<body>
+    <!-- 双色球部分 -->
+    <divt class="top-qiu">
+        <!-- 红色球部分 -->
+        <div class="red-left" >
+
+        </div>
+        <!-- 蓝色球部分 -->
+        <div class="blue-right">
+
+        </div>
+    </divt>
+    <!-- 选球部分和清空 -->
+    <div class="xuanze">
+        <!-- 下拉选择 left -->
+        <div class="xianla-red" id="red-left">
+            <select>
+            </select>
+            <span id="jx_btn_red">机选红球</span>
+            <span class="clear">清空</span>
+        </div>
+        <!-- 下拉选择 right -->
+        <div class="xianla-blue" id="blue-right">
+            <select>
+            </select>
+            <span id="jx_btn_blue">机选蓝球</span>
+            <span class="clear">清空</span>
+        </div>
+    </div>
+    <!-- 选择的详情信息 -->
+    <div class="xiangqing">
+        您选择了<span id="redNum">0</span>个红球，
+        <span id="blueNum">0</span>个篮球，共
+        <span id="curZhuShu">0</span>注，共
+        <span id="curMoney" class="red">0</span>元
+    </div>
+    <!--添加到号码蓝按钮-->
+    <div class="xiazhu"><a id="addToList"></a></div>
+    <div class="ball-list">
+        <ul id="ballUl">
+        </ul>
+        <div class="right-btn">
+            <a id="jx1">机选1注</a>
+            <a id="jx5">机选5注</a>
+            <a id="jx10">机选10注</a>
+            <a id="ballListClear">清空列表</a>
+        </div>
+        <div class="total-wrap clearfix">
+            共<span id="curZhuShu">0</span>注 &nbsp; &nbsp;
+            我要买
+            <span class="b-block"> 
+                <span class="forward down" title="减少">减少</span>
+                <input type="text" id="beishu"value="1" maxlength="2">
+                <span hidefocus="true" class="toward up" title="增加">增加</span>
+            </span>
+            倍 &nbsp; &nbsp;
+            共<span id="totalMoney" class="red">0</span>元
+        </div>
+    </div>
+</body>
+
+<script>
+    // 数据封装
+    var datas = {
+            redBallsArr: [],
+            BlueBallsArr: [],
+            onePiece: '',
+        },
+        qiufn = {
+            // 生成红蓝小球
+            ballsFun: function (domFather, num) {
+                for (var i = 1; i <= num; i++) {
+                    var qiu = document.createElement('div');
+                    qiu.style.background = 'rgb(165, 163, 161)';
+                    qiu.innerHTML = i < 10 ? "0" + i : i;
+                    domFather.appendChild(qiu);
+                    qiu.className = ' qiu';
+                }
+            },
+            // 创建下拉框
+            xialaFun: function (domFather, num) {
+                for (var i = 1; i <= num; i++) {
+                    var option = document.createElement("option");
+                    option.innerHTML = i < 10 ? "0" + i : i;
+                    domFather.appendChild(option);
+                }
+            },
+            // 点击事件
+            clickBall: function (e, data, color, num,zhu,yuan) {
+                // if(e.target.nodeName =='DIV'){}else 
+                if (e.target.style.background == 'rgb(165, 163, 161)') {
+                    e.target.style.background = color;
+                    data.push(e.target.innerHTML);
+                    e.target.style.color = '#fff'
+                    zhu.innerHTML = data.length/data.length;
+                    yuan.innerHTML = zhu.innerHTML*2
+                } else {
+                    e.target.style.background = 'rgb(165, 163, 161)';
+                    e.target.style.color = '#000'
+                    zhu.innerHTML = 0;
+                    yuan.innerHTML = 0;
+                    // 删掉对应的数据
+                    for (var i in data) {
+                        if (data[i] == e.target.innerHTML) {
+                            data.splice(i, 1);
+                        }
+                    }
+                }
+                num.innerHTML = data.length;
+                
+               
+            }
+        }
+// 生成事件
+    // 生成左边的球
+    var hong = document.querySelector('.red-left');
+    qiufn.ballsFun(hong, 33);
+    // 生成右边的球
+    var lan = document.querySelector('.blue-right');
+    qiufn.ballsFun(lan, 16);
+     // 创建下拉框-left
+    var xialaleft = document.querySelector('#red-left>select')
+    qiufn.xialaFun(xialaleft,20)
+    // 创建下拉框-right
+    var xialaright = document.querySelector('#blue-right>select')
+    qiufn.xialaFun(xialaright,16)
+// 点击事件
+    // 处理点击左侧红球事件
+    var redNum = document.querySelector('#redNum');
+    hong.addEventListener('click', function (e) {
+        console.dir(e);
+        qiufn.clickBall(e, datas.redBallsArr, 'red', redNum,curZhuShu,curMoney);
+    })
+    // 处理点击右侧蓝球事件
+    var blueNum = document.querySelector('#blueNum');
+    var curZhuShu = document.querySelector('#curZhuShu');
+    var curMoney = document.querySelector('#curMoney');
+    curZhuShu.style.color = 'pink'
+    curMoney.style.color = 'blue'
+    lan.addEventListener('click', function (e) {
+        qiufn.clickBall(e, datas.BlueBallsArr, 'blue', blueNum,curZhuShu,curMoney);
+    })
+// 添加事件
+    var addbulls = document.querySelector('#addToList');
+    addbulls.addEventListener('click', function (e) {
+        if (datas.redBallsArr.length == 6 && datas.BlueBallsArr.length == 1) {
+            datas.onePiece = datas.redBallsArr.join() + '|' + datas.BlueBallsArr.join();
+            var str = '<li><span class="code test-ellipsis">' + datas.onePiece +
+                '</span><span class="del">删除</span><span class="edit">修改</span><span class="amount">' +
+                '2元</span></li>';
+            document.querySelector('#ballUl').innerHTML = str;
+        } else {
+            alert('球不对');
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,316 @@
+/* 把我们所有标签的内外边距清零 */
+* {
+    margin: 0;
+    padding: 0;
+    /* css3盒子模型 */
+    box-sizing: border-box;
+    user-select:none;
+}
+/* em 和 i 斜体的文字不倾斜 */
+em,
+i {
+    font-style: normal
+}
+/* 去掉li 的小圆点 */
+li {
+    list-style: none
+}
+
+img {
+    /* border 0 照顾低版本浏览器 如果 图片外面包含了链接会有边框的问题 */
+    border: 0;
+    /* 取消图片底侧有空白缝隙的问题 */
+    vertical-align: middle
+}
+
+button {
+    /* 当我们鼠标经过button 按钮的时候，鼠标变成小手 */
+    cursor: pointer
+}
+
+a {
+    color: blue;
+    text-decoration: none
+}
+
+a:hover {
+    color: #c81623
+}
+
+button,
+input {
+    /* "\5B8B\4F53" 就是宋体的意思 这样浏览器兼容性比较好 */
+    font-family: Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+    /* 默认有灰色边框我们需要手动去掉 */
+    border: 0; 
+    outline: none;
+}
+
+body {
+    /* CSS3 抗锯齿形 让文字显示的更加清晰 */
+    -webkit-font-smoothing: antialiased;
+    background-color: #fff;
+    font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+    color: #666
+}
+
+.hide,
+.none {
+    display: none
+}
+/* 清除浮动 */
+.clearfix:after {
+    visibility: hidden;
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0
+}
+
+.clearfix {
+    *zoom: 1
+}
+
+
+/* 开始 */
+  /* 双色球部分 */
+  .top-qiu {
+    margin: 50px auto 0;
+    width: 1200px;
+    height: 180px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 红色球部分 */
+.red-left {
+    width: 599px;
+    height: 180px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+/* 蓝色球部分 */
+.blue-right {
+    width: 349px;
+    height: 180px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.blue-right>div {
+    margin-right: 8px;
+}
+
+/* 球 */
+.qiu {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    /* background-color: rgb(165, 163, 161); */
+    /* user-select:none; 取消双击选中文字 */
+    cursor: pointer;
+    text-align: center;
+    line-height: 50px;
+    color: #000;
+}
+.top-qiu .qiu:hover{
+    color: #fff;
+}
+/* 选球部分和清空 */
+/* 下拉选择 */
+.xuanze {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px auto 0;
+    width: 1200px;
+}
+
+.xianla-red {
+    padding-left: 454px;
+    width: 599px;
+    cursor: pointer;
+    color: #0f3f94;
+}
+
+.xianla-blue {
+    padding-left: 204px;
+    width: 349px;
+    cursor: pointer;
+    color: #0f3f94;
+}
+
+.clear {
+    margin-left: 15px;
+}
+
+/* 选择的详细信息 */
+.xiangqing {
+    width: 1200px;
+    color: #000;
+    font-size: 18px;
+    margin: 20px auto 0;
+    text-align: center;
+}
+
+/*添加到号码蓝 */
+.xiazhu {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#addToList {
+    background: url("img/ssq_button_ver3.0.jpg") no-repeat 0 -236px;
+    border: none;
+    cursor: pointer;
+    width: 182px;
+    height: 58px;
+    display: inline-block;
+    text-align: center;
+}
+
+#addToList:hover {
+    background-position: -184px -236px;
+}
+
+#addToList::after {
+    content: '';
+    display: inline-block;
+    width: 182px;
+    height: 24px;
+    background: url("img/ssq_button_ver3.0.jpg") no-repeat 18px -89px #fef9f3;
+    margin-top: 34px;
+}
+
+#addToList.change {
+    background-position: -111px -200px;
+}
+
+#addToList.change:hover {
+    background-position: -297px -200px;
+}
+
+/*号码蓝*/
+.ball-list {
+    width: 640px;
+    height: 200px;
+    margin: 10px auto;
+}
+
+#ballUl {
+    width: 500px;
+    height: 100%;
+    overflow-y: auto;
+    float: left;
+}
+
+#ballUl li {
+    line-height: 30px;
+    height: 31px;
+    border-bottom: 1px solid #EEECEB;
+    padding: 0 5px;
+    vertical-align: middle;
+}
+
+#ballUl li.on {
+    background: blue;
+    color: #fff;
+}
+
+#ballUl li.on .amount {
+    color: #fff;
+}
+
+#ballUl li.on .del,
+#ballUl li.on .edit {
+    color: #FFcc00;
+}
+
+.code {
+    float: left;
+    width: 200px;
+    text-align: left;
+}
+
+.del,
+.edit,
+.amount {
+    float: right;
+    color: #999999;
+    line-height: 29px;
+    cursor: pointer;
+    margin: 0 6px 0 0;
+}
+
+.amount {
+    color: #000;
+}
+
+.right-btn {
+    width: 140px;
+    float: right;
+}
+
+.right-btn a {
+    display: block;
+    margin: 15px;
+    cursor: pointer;
+    background: url("http://888.gtimg.com/images/trade/public/p_trade_public.png") no-repeat 0 -93px;
+    height: 28px;
+    line-height: 28px;
+    margin-top: 5px;
+    width: 68px;
+    color: #999999;
+}
+
+.total-wrap {
+    width: 300px;
+    font-size: 14px;
+}
+
+/*增添倍数模块[[*/
+.b-block {
+    position: relative;
+    height: 27px;
+    width: 87px;
+    line-height: 27px;
+    display: inline-block;
+    padding: 1px;
+    bottom: -10px;
+    bottom: -5px;
+}
+
+.b-block input {
+    position: absolute;
+    border: 1px solid #c9c9c9;
+    width: 48px;
+    height: 22px;
+    background-color: #fff;
+    vertical-align: middle;
+    text-align: center;
+    font: bold 16px/23px Arial;
+    left: 19px;
+    _left: 18px;
+}
+
+.b-block .toward {
+    height: 25px;
+    right: 0px;
+    text-indent: -9999px;
+    overflow: hidden;
+    position: absolute;
+    background-position: -38px -117px;
+    cursor: pointer;
+}
+
+.b-block .forward {
+    height: 25px;
+    left: 0px;
+    text-indent: -9999px;
+    overflow: hidden;
+    position: absolute;
+    background-position: 0 -117px;
+    cursor: pointer;
+}
+
